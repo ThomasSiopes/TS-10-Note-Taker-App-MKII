@@ -2,7 +2,7 @@
 // var noteData = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
 // var noteArray = noteData.results;
 
-const noteData = require('../db/noteData');
+const noteData = require('../public/noteData');
 
 module.exports = (app) => {
     app.get('/api/notes', (req, res) => res.json(noteData));
