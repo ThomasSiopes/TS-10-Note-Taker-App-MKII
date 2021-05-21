@@ -1,5 +1,6 @@
 const fs = require('fs');
-const noteData = fs.readFileSync(__dirname + '/../db/db');
+const path = require('path');
+const noteData = fs.readFileSync(path.join(__dirname, '..', 'db', 'db.json'));
 
 module.exports = (app) => {
     app.get('/api/notes', (req, res) => res.json(noteData));
