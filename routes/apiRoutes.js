@@ -1,13 +1,27 @@
 const fs = require('fs');
 const path = require('path');
-const noteData = fs.readFileSync(path.join(__dirname, '..', 'db', 'db.json'), 'utf8');
-console.log(noteData);
+const filePath = path.join(__dirname, '..', 'db', 'db.json');
+const noteData = fs.readFileSync(filePath, 'utf8');
+const newData = JSON.parse(noteData);
 
 module.exports = (app) => {
-    app.get('/api/notes', (req, res) => res.json(noteData.results));
+    app.get('/api/notes', (req, res) => res.json(newData));
 
     app.post('/api/notes', (req, res) => {
-        noteData.push(req.body);
+        let matchSwitch = 1;
+        let i;
+        for(i = 0; i < newData.length; ++i) {
+            if(req.body == newData[i]) {
+                matchSwitch = 0;
+            }
+        }
+        if(matchSwitch) {
+            req.body.id = i;
+            newData.push(req.body);
+        }
+        fs.writeFile(filePath, JSON.stringify(newData), (err) => {
+            if(err) throw err;
+        })
         res.json(true);
     });
     
