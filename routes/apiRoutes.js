@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const filePath = path.join(__dirname, '..', 'db', 'db.json');
-const noteData = fs.readFileSync(filePath, 'utf8');
-const newData = JSON.parse(noteData);
+const newData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 module.exports = (app) => {
     app.get('/api/notes', (req, res) => res.json(newData));
@@ -24,6 +23,4 @@ module.exports = (app) => {
         })
         res.json(true);
     });
-    
-    // app.delete('/api/notes', (req, res) => {});
 };
